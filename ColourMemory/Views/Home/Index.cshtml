@@ -1,0 +1,80 @@
+﻿@using ColourMemory.Models;
+@using System.Threading;
+@model IEnumerable<Card>;
+@{
+
+    ViewData["Title"] = "Colour Memory";
+}
+
+
+<h4 class="text-center">@ViewBag.Points poäng</h4>
+<br />
+@if (ViewBag.Message != null)
+{
+    <h2 class="text-center">@ViewBag.Message<a asp-controller="Home" asp-action="Restart">Restart</a>.</h2>
+}
+
+
+<div class="container">
+    <form>
+
+        @for (int i = 0; i < 4; i++)
+
+        {
+            <div class="row">
+                <div class="col-md-2"></div>
+                @for (int j = 0; j < 4; j++)
+                {
+
+                    <div class="col-md-2">
+                        @if (Model.ElementAt(j + i * 4).Up == false && Model.ElementAt(j + i * 4).Gone == false)
+                        {
+                            <button class="btn rounded" asp-controller="Home" asp-action="Turn" asp-route-id="@Model.ElementAt(j + i * 4).Id">
+                                <img src=@Model.ElementAt(j + i * 4).Image />
+                            </button>
+                        }
+                        else if (Model.ElementAt(j + i * 4).Up == true)
+                        {
+                            <div class="card" style="background-color:@Model.ElementAt(j+i*4).CardColor">
+                            </div>
+
+                        }
+                        else
+                        {
+                            <div class="col-md-2"></div>
+                        }
+                    </div>
+
+                }
+                <div class="col-md-2"></div>
+            </div>
+
+        }
+
+    </form>
+</div>
+<script type="text/javascript">
+    {
+        var myBoolValue=@ViewBag.Timeout.ToString().ToLower();
+        if (myBoolValue) {
+            console.log(myBoolValue);
+            DisableButtons();
+            window.setTimeout(GoToTwoTurned, 2000);
+        }
+    }
+    function DisableButtons() {
+        var buttons = document.getElementsByTagName('button');
+        console.log(buttons.length);
+        for (let i = 0; i < buttons.length;i++) {
+            buttons[i].disabled = true;
+        }
+    };
+
+     function GoToTwoTurned()
+        {
+            window.location.href = '@Url.Action("TwoTurned", "Home")';
+        };
+
+</script>
+
+
