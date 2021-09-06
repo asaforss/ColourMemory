@@ -1,14 +1,11 @@
 ﻿using ColourMemory.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
- 
+
 
 namespace ColourMemory.Controllers
 {
@@ -55,7 +52,7 @@ namespace ColourMemory.Controllers
         }
         public IActionResult TwoTurned()
         { 
-            List<Card> upps = _memoRepository.GetAllCards().Where(c => c.Up == true).ToList();
+            List<Card> upps = _memoRepository.GetAllCards().Where(c => c.Up).ToList();
             if (upps.Count() > 1)
             {
 
